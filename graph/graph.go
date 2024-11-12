@@ -62,6 +62,12 @@ type (
 		// NewConstant returns a node representing a numerical constant value in the graph.
 		NewConstant(value platform.HostBuffer) (Node, error)
 
+		// NewCall returns a node that invokes a subgraph with the given result node.
+		NewCall(sg Graph, resultNode Node) (Node, error)
+
+		// NewSubgraph returns a Graph instance that maps to a new subgraph.
+		NewSubgraph(name string) (Graph, error)
+
 		// NewArgument returns a node set by a caller when calling the function.
 		NewArgument(name string, shape *shape.Shape, index int) (Node, error)
 

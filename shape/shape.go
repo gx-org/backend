@@ -63,7 +63,7 @@ func (s Shape) String() string {
 	for i, axisLength := range s.AxisLengths {
 		axes[i] = fmt.Sprintf("[%d]", axisLength)
 	}
-	return s.DType.String() + strings.Join(axes, "")
+	return strings.Join(axes, "") + s.DType.String()
 }
 
 // ArrayI is a minimum generic array interface.

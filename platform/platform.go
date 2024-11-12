@@ -37,5 +37,8 @@ type (
 
 		// Send raw data to the device.
 		Send(buf []byte, sh *shape.Shape) (DeviceHandle, error)
+
+		// Ordinal of the device on the platform.
+		Ordinal() int
 	}
 )
