@@ -81,9 +81,14 @@ type NonAlgebraType interface {
 	~bool
 }
 
-// AlgebraType are types on which common algebra operations are supported.
+// IntegerType are types on which integer algebra operations are supported.
+type IntegerType interface {
+	Signed | Unsigned
+}
+
+// AlgebraType are types on which common algebra operations between integers and floats are supported.
 type AlgebraType interface {
-	Float | Signed | Unsigned
+	Float | IntegerType
 }
 
 // GoDataType that can be stored in an array.

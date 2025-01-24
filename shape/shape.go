@@ -46,11 +46,7 @@ func (s Shape) IsAtomic() bool {
 
 // Size returns the number of elements of DType are needed for this shape. It's the product of all dimensions.
 func (s Shape) Size() int {
-	size := 1
-	for _, d := range s.AxisLengths {
-		size *= d
-	}
-	return size
+	return Size(s.AxisLengths)
 }
 
 // ByteSize returns the size of the buffer, in bytes, to store the data specified by the shape.
@@ -74,4 +70,13 @@ type ArrayI[T dtype.GoDataType] interface {
 	// Flat returns the data stored by the array.
 	// The length of the returned slice should match the size of the shape.
 	Flat() []T
+}
+
+// Size returns the total number of elements given a slice of axis lengths.
+func Size(dims []int) int {
+	size := 1
+	for _, d := range dims {
+		size *= d
+	}
+	return size
 }

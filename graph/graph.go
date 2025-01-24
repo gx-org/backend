@@ -29,6 +29,20 @@ type (
 		Graph() Graph
 	}
 
+	// Tuple bundles multiple Nodes together.
+	Tuple interface {
+		Node
+
+		// Element returns a Node representing the ith element of the tuple.
+		Element(i int) (Node, error)
+
+		// Size returns the number of elements in the tuple.
+		Size() int
+
+		// Unpack returns the tuple's constituent Nodes.
+		Unpack() ([]Node, error)
+	}
+
 	// Runner runs a node in a compiled graph.
 	Runner interface {
 		Run([]platform.Handle) (out, traces []platform.DeviceHandle, err error)
@@ -41,7 +55,7 @@ type (
 	}
 
 	// Graph implemented by a backend.
-	// The GX interpreter ses this interface to build a graph for the backend.
+	// The GX interpreter uses this interface to build a graph for the backend.
 	Graph interface {
 		// Platform used by the graph.
 		Platform() platform.Platform
@@ -54,6 +68,12 @@ type (
 		Compile(dev platform.Device, output, traced []*OutputNode, params []*shape.Shape) (Runner, error)
 	}
 
+	// Subgraph bundles a Graph and its output node together.
+	Subgraph struct {
+		Graph  Graph
+		Result OutputNode
+	}
+
 	// CoreBuilder creates node in the graph for core operations.
 	CoreBuilder interface {
 		// Graph returns the graph in which the nodes are created into.
@@ -62,8 +82,11 @@ type (
 		// NewConstant returns a node representing a numerical constant value in the graph.
 		NewConstant(value platform.HostBuffer) (Node, error)
 
-		// NewCall returns a node that invokes a subgraph with the given result node.
-		NewCall(sg Graph, resultNode Node) (Node, error)
+		// NewTuple returns a node representing a tuple of nodes.
+		NewTuple(nodes []Node) (Tuple, error)
+
+		// NewCall returns a node that invokes a subgraph.
+		NewCall(sg Subgraph, args ...Node) (Node, error)
 
 		// NewSubgraph returns a Graph instance that maps to a new subgraph.
 		NewSubgraph(name string) (Graph, error)
@@ -94,5 +117,8 @@ type (
 
 		// NewDotGeneral returns a general dot operator node.
 		NewDotGeneral(x, y Node, batchAxes, reduceAxes [2][]int) (Node, error)
+
+		// NewWhile returns a while loop node.
+		NewWhile(cond, body Subgraph, state Node) (Node, error)
 	}
 )
