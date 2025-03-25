@@ -16,6 +16,7 @@
 package graph
 
 import (
+	"fmt"
 	"go/ast"
 
 	"github.com/gx-org/backend/dtype"
@@ -62,6 +63,12 @@ type (
 
 		// Core returns the builder to build core operations.
 		Core() CoreBuilder
+
+		// Num returns the implementation for functions in the num package.
+		Num() NumBuilder
+
+		// Math returns the implementation for functions in the math package.
+		Math() MathBuilder
 
 		// Compile the graph for a given device.
 		// The graph is not supposed to be modified once it has been compiled.
@@ -121,4 +128,25 @@ type (
 		// NewWhile returns a while loop node.
 		NewWhile(cond, body Subgraph, state Node) (Node, error)
 	}
+
+	// NumBuilder creates node in the graph for functions in the num package from the standard library.
+	NumBuilder interface {
+		// NewIota returns a node filling an array with values from 0 to number of elements-1.
+		NewIota(sh *shape.Shape, iotaAxis int) (Node, error)
+	}
+
+	// MathBuilder creates node in the graph for functions in the max package from the standard library.
+	MathBuilder interface {
+		// NewCos returns the computation for cosine.
+		NewCos(x Node) (Node, error)
+		// NewSin returns the computation for sine.
+		NewSin(x Node) (Node, error)
+		// NewTanh returns the computation for hyperbolic tangent.
+		NewTanh(x Node) (Node, error)
+	}
 )
+
+// String representation of an output node.
+func (out *OutputNode) String() string {
+	return fmt.Sprintf("%s: %v", out.Shape.String(), out.Node)
+}

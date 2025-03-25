@@ -34,6 +34,7 @@ const (
 	Int64
 	Uint32
 	Uint64
+	Bfloat16
 	Float32
 	Float64
 
@@ -53,6 +54,8 @@ func (dt DataType) String() string {
 		return "uint32"
 	case Uint64:
 		return "uint64"
+	case Bfloat16:
+		return "bfloat16"
 	case Float32:
 		return "float32"
 	case Float64:
@@ -66,9 +69,19 @@ type Float interface {
 	~float32 | ~float64
 }
 
+// IsFloat returns true if the data type is a float.
+func IsFloat(d DataType) bool {
+	return d == Float32 || d == Float64
+}
+
 // Signed is a constraint supporting signed integer type.
 type Signed interface {
 	~int32 | ~int64
+}
+
+// IsSigned returns true if the data type is a signed integer.
+func IsSigned(d DataType) bool {
+	return d == Int32 || d == Int64
 }
 
 // Unsigned is a constraint supporting unsigned integer type.
@@ -76,9 +89,19 @@ type Unsigned interface {
 	~uint32 | ~uint64
 }
 
+// IsUnsigned returns true if the data type is a unsigned integer.
+func IsUnsigned(d DataType) bool {
+	return d == Uint32 || d == Uint64
+}
+
 // NonAlgebraType are types on which common algebra operations are NOT supported.
 type NonAlgebraType interface {
 	~bool
+}
+
+// IsNonAlgebra returns true if the data type is a non algebra data type.
+func IsNonAlgebra(d DataType) bool {
+	return d == Bool
 }
 
 // IntegerType are types on which integer algebra operations are supported.
@@ -86,9 +109,19 @@ type IntegerType interface {
 	Signed | Unsigned
 }
 
+// IsInteger returns true if the data type is an integer.
+func IsInteger(d DataType) bool {
+	return IsSigned(d) || IsUnsigned(d)
+}
+
 // AlgebraType are types on which common algebra operations between integers and floats are supported.
 type AlgebraType interface {
-	Float | IntegerType
+	Float | IntegerType | Bfloat16T
+}
+
+// IsAlgebra returns true if the data type is an algebra type.
+func IsAlgebra(d DataType) bool {
+	return IsFloat(d) || IsInteger(d) || d == Bfloat16
 }
 
 // GoDataType that can be stored in an array.
@@ -102,6 +135,8 @@ func Generic[T GoDataType]() DataType {
 	switch (any(t)).(type) {
 	case bool:
 		return Bool
+	case Bfloat16T:
+		return Bfloat16
 	case float32:
 		return Float32
 	case float64:
@@ -120,13 +155,14 @@ func Generic[T GoDataType]() DataType {
 
 // Sizes of data type (in bytes).
 const (
-	BoolSize    = 1
-	Int32Size   = 4
-	Int64Size   = 8
-	Uint32Size  = 4
-	Uint64Size  = 8
-	Float32Size = 4
-	Float64Size = 8
+	BoolSize     = 1
+	Int32Size    = 4
+	Int64Size    = 8
+	Uint32Size   = 4
+	Uint64Size   = 8
+	Bfloat16Size = 2
+	Float32Size  = 4
+	Float64Size  = 8
 )
 
 // Sizeof returns the size of an atomic value of a data type.
@@ -142,16 +178,18 @@ func Sizeof(dt DataType) int {
 		return Uint32Size
 	case Uint64:
 		return Uint64Size
+	case Bfloat16:
+		return Bfloat16Size
 	case Float32:
 		return Float32Size
 	case Float64:
 		return Float64Size
 	}
-	panic("invalid datatype")
+	panic(fmt.Sprint("invalid datatype: ", dt))
 }
 
 // ToSlice converts a []byte buffer into a slice of a given Go type.
-func ToSlice[T GoDataType](data []byte) []T {
+func ToSlice[T any](data []byte) []T {
 	var t T
 	size := int(unsafe.Sizeof(t))
 	if len(data)%size != 0 {
