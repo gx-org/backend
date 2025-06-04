@@ -1,0 +1,48 @@
+# Run checks on the piper branch to merge with the main branch.
+
+name: Piper
+
+on:
+  push:
+    branches: ["piper"]
+  pull_request:
+    branches: ["piper"]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.23'
+
+    - name: Tidy 
+      run: go mod tidy
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Test
+      run: go test -v ./...
+
+  merge:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Merge branch into main
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { execSync } = require('child_process');
+          const targetBranch = 'main'; 
+          const sourceBranch = 'piper';
+
+          execSync(`git checkout ${targetBranch}`);
+          execSync(`git merge ${sourceBranch}`);
+          execSync(`git push origin ${targetBranch}`);
