@@ -26,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Set up Go
       uses: actions/setup-go@v4
@@ -51,7 +53,7 @@ jobs:
       run: git config user.email "noreply@github.com" && git config user.name "Github Action"
 
     - name: Merge piper into main
-      run: git merge --allow-unrelated-histories --no-edit piper
+      run: git merge --no-edit piper
 
     - name: Test after piper merged into main
       run: go test -v ./...
