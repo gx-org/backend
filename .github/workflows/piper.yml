@@ -35,5 +35,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Checkout the main branch
-      run: git checkout main
+    - name: List branches
+      run: git branch -a -r
