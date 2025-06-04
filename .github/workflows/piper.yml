@@ -41,8 +41,8 @@ jobs:
     - name: Test before any merge
       run: go test -v ./...
 
-    - name: Merge main branch
-      run: git pull --rebase --no-edit origin main
+    - name: Merge piper branch
+      run: git pull --no-edit origin piper
 
     - name: Test after merge with main
       run: go test -v ./...
