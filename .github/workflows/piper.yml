@@ -44,6 +44,9 @@ jobs:
     - name: Merge piper branch
       run: git pull --no-edit origin piper
 
+    - name: Merge main branch
+      run: git pull --no-edit origin main
+
     - name: Test after merge with main
       run: go test -v ./...
 
