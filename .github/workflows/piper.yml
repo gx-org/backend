@@ -38,8 +38,14 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Test
+    - name: Test before any merge
       run: go test -v ./...
 
     - name: Merge main branch
       run: git pull --no-edit origin main
+
+    - name: Test after merge with main
+      run: go test -v ./...
+
+    - name: Push to main
+      run: git push origin main
