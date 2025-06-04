@@ -32,9 +32,6 @@ jobs:
       with:
         go-version: '1.23'
 
-    - name: Checking out the piper branch
-      run: git fetch origin && git checkout -b piper origin/piper
-
     - name: Tidy 
       run: go mod tidy
 
@@ -45,7 +42,7 @@ jobs:
       run: go test -v ./...
 
     - name: Merge main branch
-      run: git pull --no-rebase --no-edit origin main
+      run: git fetch origin && git branch -r -a && git merge --no-edit origin/main
 
     - name: Test after merge with main
       run: go test -v ./...
