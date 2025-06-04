@@ -48,7 +48,7 @@ jobs:
       run: go test -v ./...
 
     - name: Merge piper into main
-      run: git merge --no-edit piper
+      run: git merge --allow-unrelated-histories --no-edit piper
 
     - name: Test after piper merged into main
       run: go test -v ./...
