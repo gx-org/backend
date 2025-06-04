@@ -35,8 +35,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: List branches
-      run: git branch -a -r
+    - name: Merge main branch
+      run: git pull origin main
 
-    - name: List remote
-      run: git remote -v
