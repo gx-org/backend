@@ -38,16 +38,19 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Test before any merge
+    - name: Test the piper branch
       run: go test -v ./...
 
-    - name: Merge piper branch
-      run: git pull --no-edit origin piper
+    - name: Checkout the main branch
+      run: git fetch origin ; git checkout -b main origin/main
 
-    - name: Merge main branch
-      run: git pull --no-edit origin main
+    - name: Test the main branch
+      run: go test -v ./...
 
-    - name: Test after merge with main
+    - name: Merge piper into main
+      run: git merge --no-edit piper
+
+    - name: Test after piper merged into main
       run: go test -v ./...
 
     - name: Push to main
