@@ -31,7 +31,7 @@ type Shape struct {
 }
 
 // OuterAxisLength returns the shape's outermost axis length, or 1 for rank-0 shapes.
-func (s Shape) OuterAxisLength() int {
+func (s *Shape) OuterAxisLength() int {
 	if len(s.AxisLengths) == 0 {
 		return 1
 	}
@@ -40,21 +40,37 @@ func (s Shape) OuterAxisLength() int {
 
 // IsAtomic returns true for the shape of an atomic value, that is
 // a single value with no axis.
-func (s Shape) IsAtomic() bool {
+func (s *Shape) IsAtomic() bool {
 	return len(s.AxisLengths) == 0
 }
 
 // Size returns the number of elements of DType are needed for this shape. It's the product of all dimensions.
-func (s Shape) Size() int {
+func (s *Shape) Size() int {
 	return Size(s.AxisLengths)
 }
 
 // ByteSize returns the size of the buffer, in bytes, to store the data specified by the shape.
-func (s Shape) ByteSize() int {
+func (s *Shape) ByteSize() int {
 	return dtype.Sizeof(s.DType) * s.Size()
 }
 
-func (s Shape) String() string {
+// Equal returns true if o represents the same shape.
+func (s *Shape) Equal(o *Shape) bool {
+	if s.DType != o.DType {
+		return false
+	}
+	if len(s.AxisLengths) != len(o.AxisLengths) {
+		return false
+	}
+	for i, li := range s.AxisLengths {
+		if o.AxisLengths[i] != li {
+			return false
+		}
+	}
+	return true
+}
+
+func (s *Shape) String() string {
 	axes := make([]string, len(s.AxisLengths))
 	for i, axisLength := range s.AxisLengths {
 		axes[i] = fmt.Sprintf("[%d]", axisLength)
