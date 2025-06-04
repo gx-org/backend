@@ -42,7 +42,7 @@ jobs:
       run: go test -v ./...
 
     - name: Merge main branch
-      run: git fetch origin && git branch -r -a && git merge --no-edit origin/main
+      run: git pull --rebase --no-edit origin main
 
     - name: Test after merge with main
       run: go test -v ./...
