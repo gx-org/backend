@@ -37,3 +37,6 @@ jobs:
 
     - name: List branches
       run: git branch -a -r
+
+    - name: List remote
+      run: git remote -v
