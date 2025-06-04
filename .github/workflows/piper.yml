@@ -32,6 +32,9 @@ jobs:
       with:
         go-version: '1.23'
 
+    - name: Checking out the piper branch
+      run: git fetch origin && git switch piper origin/piper
+
     - name: Tidy 
       run: go mod tidy
 
