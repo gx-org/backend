@@ -127,6 +127,9 @@ type (
 
 		// NewWhile returns a while loop node.
 		NewWhile(cond, body Subgraph, state Node) (Node, error)
+
+		// NewBroadcastInDim broadcasts data across a given set of axis.
+		NewBroadcastInDim(x Node, shape *shape.Shape, broadcastAxes []int) (Node, error)
 	}
 
 	// NumBuilder creates node in the graph for functions in the num package from the standard library.
