@@ -26,20 +26,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
         go-version: '1.23'
 
+    - name: Setup an identity
+      run: git config user.email "noreply@github.com" && git config user.name "Github Action"
+
     - name: Tidy 
       run: go mod tidy
 
-    - name: Build
-      run: go build -v ./...
-
-    - name: Test
+    - name: Test the piper branch
       run: go test -v ./...
 
-    - name: Merge main branch
-      run: git pull --no-edit --rebase origin main
+    - name: Checkout the main branch
+      run: git fetch origin ; git checkout -b main origin/main
+
+    - name: Test the main branch
+      run: go test -v ./...
+
+    - name: Merge piper into main
+      run: git merge --no-edit piper
+
+    - name: Test after piper merged into main
+      run: go test -v ./...
+
+    - name: Push to main
+      run: git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Tag a new version
+      run: |
+        export VERSION=$(go run golang.org/x/exp/cmd/gorelease@latest | grep Suggested | awk '{print $NF}')
+        echo "VERSION: $VERSION"
