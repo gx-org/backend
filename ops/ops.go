@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package graph defines the graph for a backend.
-package graph
+// Package ops defines the operations backend can build.
+package ops
 
 import (
 	"fmt"

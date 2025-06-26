@@ -16,7 +16,7 @@
 package backend
 
 import (
-	"github.com/gx-org/backend/graph"
+	"github.com/gx-org/backend/ops"
 	"github.com/gx-org/backend/platform"
 )
 
@@ -25,6 +25,6 @@ type Backend interface {
 	// Platform supporting the backend.
 	Platform() platform.Platform
 
-	// NewGraph returns a new graph backend.
-	NewGraph(name string) graph.Graph
+	// NewOps returns a new ops builder.
+	NewOps(name string) ops.Graph
 }
