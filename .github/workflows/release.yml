@@ -43,5 +43,5 @@ jobs:
     - name: Build a release tag
       run: |
         go run golang.org/x/exp/cmd/gorelease@latest
-        export VERSION=$(go run golang.org/x/exp/cmd/gorelease@latest | grep Suggested)
+        export VERSION=$(go run golang.org/x/exp/cmd/gorelease@latest | grep Suggested | awk '{print $NF}')
         echo "VERSION: $VERSION"
