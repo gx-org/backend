@@ -93,10 +93,10 @@ type (
 		Tuple(nodes []Node) (Tuple, error)
 
 		// Call returns a node that invokes a subgraph.
-		Call(sg Subgraph, args ...Node) (Node, error)
+		Call(sg *Subgraph, args ...Node) (Node, error)
 
 		// Subgraph returns a Graph instance that maps to a new subgraph.
-		Subgraph(name string) (Graph, error)
+		Subgraph(name string, args []*shape.Shape) (Graph, error)
 
 		// Argument returns a node set by a caller when calling the function.
 		Argument(name string, shape *shape.Shape, index int) (Node, error)
@@ -126,7 +126,7 @@ type (
 		DotGeneral(x, y Node, batchAxes, reduceAxes [2][]int) (Node, error)
 
 		// While returns a while loop node.
-		While(cond, body Subgraph, state Node) (Node, error)
+		While(cond, body *Subgraph, state Node) (Node, error)
 
 		// BroadcastInDim broadcasts data across a given set of axis.
 		BroadcastInDim(x Node, shape *shape.Shape, broadcastAxes []int) (Node, error)
