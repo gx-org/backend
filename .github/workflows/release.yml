@@ -37,8 +37,21 @@ jobs:
     - name: Setup an identity
       run: git config user.email "noreply@github.com" && git config user.name "Github Action"
 
+    - name: Update all the dependencies to the latest release
+      run: |
+        go get -u ./...
+        go mod tidy
+
     - name: Run all the tests
       run: go test ./...
+
+    - name: Commit changes if required
+      run: git diff --quiet && git diff --staged --quiet || git commit -am 'Update dependencies.'
+
+    - name: Push to origin
+      run: git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
 
     - name: Build a release tag
       run: |
