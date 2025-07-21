@@ -96,7 +96,7 @@ type (
 		Call(sg *Subgraph, args ...Node) (Node, error)
 
 		// Subgraph returns a Graph instance that maps to a new subgraph.
-		Subgraph(name string) (Graph, error)
+		Subgraph(name string, args []*shape.Shape) (Graph, error)
 
 		// Argument returns a node set by a caller when calling the function.
 		Argument(name string, shape *shape.Shape, index int) (Node, error)
