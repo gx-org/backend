@@ -26,5 +26,5 @@ type Backend interface {
 	Platform() platform.Platform
 
 	// NewOps returns a new ops builder.
-	NewOps(name string) ops.Graph
+	NewOps(name string) (ops.Graph, error)
 }
