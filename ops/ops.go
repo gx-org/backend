@@ -140,6 +140,10 @@ type (
 
 	// MathBuilder creates node in the graph for functions in the max package from the standard library.
 	MathBuilder interface {
+		// Log returns the natural logarithm of x.
+		Log(x Node) (Node, error)
+		// Exp returns the computation for the exponential.
+		Exp(x Node) (Node, error)
 		// Cos returns the computation for cosine.
 		Cos(x Node) (Node, error)
 		// Sin returns the computation for sine.
