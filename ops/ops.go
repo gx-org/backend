@@ -70,6 +70,9 @@ type (
 		// Math returns the implementation for functions in the math package.
 		Math() MathBuilder
 
+		// DType returns the implementation for functions in the dtype package.
+		DType() DTypeBuilder
+
 		// Compile the graph for a given device.
 		// The graph is not supposed to be modified once it has been compiled.
 		Compile(dev platform.Device, output, traced []*OutputNode, params []*shape.Shape) (Runner, error)
@@ -130,6 +133,12 @@ type (
 
 		// BroadcastInDim broadcasts data across a given set of axis.
 		BroadcastInDim(x Node, shape *shape.Shape, broadcastAxes []int) (Node, error)
+	}
+
+	// DTypeBuilder creates node related to data types.
+	DTypeBuilder interface {
+		// Bitcast casts a byte array into a given data type.
+		Bitcast(x Node, target dtype.DataType) (Node, error)
 	}
 
 	// NumBuilder creates node in the graph for functions in the num package from the standard library.
