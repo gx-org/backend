@@ -149,15 +149,37 @@ type (
 
 	// MathBuilder creates node in the graph for functions in the max package from the standard library.
 	MathBuilder interface {
+		// Abs returns the absolute value of x.
+		Abs(x Node) (Node, error)
+		// Ceil returns the ceiling of x.
+		Ceil(x Node) (Node, error)
+		// Cos returns the cosine of x.
+		Cos(x Node) (Node, error)
+		// Erf returns the error function of x.
+		Erf(x Node) (Node, error)
+		// Exp returns the exponential of x.
+		Exp(x Node) (Node, error)
+		// Expm1 returns Exp(x)-1.
+		Expm1(x Node) (Node, error)
+		// Floor returns the floor of x.
+		Floor(x Node) (Node, error)
 		// Log returns the natural logarithm of x.
 		Log(x Node) (Node, error)
-		// Exp returns the computation for the exponential.
-		Exp(x Node) (Node, error)
-		// Cos returns the computation for cosine.
-		Cos(x Node) (Node, error)
-		// Sin returns the computation for sine.
+		// Log1p returns log(1+x).
+		Log1p(x Node) (Node, error)
+		// Logistic returns 1/(1+exp(-x)).
+		Logistic(x Node) (Node, error)
+		// Round returns the nearest integer of x.
+		Round(x Node) (Node, error)
+		// Rsqrt returns 1/sqrt(x).
+		Rsqrt(x Node) (Node, error)
+		// Sign returns the sign of x.
+		Sign(x Node) (Node, error)
+		// Sin returns the sine of x.
 		Sin(x Node) (Node, error)
-		// Tanh returns the computation for hyperbolic tangent.
+		// Sqrt returns sqrt(x).
+		Sqrt(x Node) (Node, error)
+		// Tanh returns the hyperbolic tangent of x.
 		Tanh(x Node) (Node, error)
 	}
 )
