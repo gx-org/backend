@@ -70,6 +70,9 @@ type (
 		// Math returns the implementation for functions in the math package.
 		Math() MathBuilder
 
+		// ShapeBuilder returns the implementation for function shape package.
+		Shape() ShapeBuilder
+
 		// DType returns the implementation for functions in the dtype package.
 		DType() DTypeBuilder
 
@@ -145,6 +148,12 @@ type (
 	NumBuilder interface {
 		// Iota returns a node filling an array with values from 0 to number of elements-1.
 		Iota(sh *shape.Shape, iotaAxis int) (Node, error)
+	}
+
+	// ShapeBuilder has functions to create shape-related node in the graph.
+	ShapeBuilder interface {
+		// Split an array along an axis.
+		Split(x Node, axis, numSplits int) (Node, error)
 	}
 
 	// MathBuilder creates node in the graph for functions in the max package from the standard library.
