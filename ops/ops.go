@@ -154,6 +154,8 @@ type (
 	ShapeBuilder interface {
 		// Split an array along an axis.
 		Split(x Node, axis, numSplits int) (Node, error)
+		// Concat multiple arrays into one.
+		Concat(axis int, nodes []Node) (Node, error)
 	}
 
 	// MathBuilder creates node in the graph for functions in the max package from the standard library.
