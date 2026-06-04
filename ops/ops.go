@@ -146,8 +146,20 @@ type (
 
 	// NumBuilder creates node in the graph for functions in the num package from the standard library.
 	NumBuilder interface {
+		// Dot product between x and y.
+		Dot(x, y Node) (Node, error)
+
 		// Iota returns a node filling an array with values from 0 to number of elements-1.
 		Iota(sh *shape.Shape, iotaAxis int) (Node, error)
+
+		// ArgMinMax applies a min or max operator over an axis
+		ArgMinMax(x Node, axis int, outputDType dtype.DataType, isMin bool) (Node, error)
+
+		// ReduceMax applies max over axes.
+		ReduceMax(x Node, axes []int) (Node, error)
+
+		// ReduceSum sums over axes.
+		ReduceSum(x Node, axes []int) (Node, error)
 	}
 
 	// ShapeBuilder has functions to create shape-related node in the graph.
@@ -156,6 +168,10 @@ type (
 		Split(x Node, axis, numSplits int) (Node, error)
 		// Concat multiple arrays into one.
 		Concat(axis int, nodes []Node) (Node, error)
+		// Gather data from an array.
+		Gather(x Node, startIndices Node, indexVectorAxis int, offsetAxes []int, collapsedSliceAxes []int, startIndexMap []int, sliceSizes []int, indicesAreSorted bool) (Node, error)
+		// Transpose the array.
+		Transpose(x Node, permutation []int) (Node, error)
 	}
 
 	// MathBuilder creates node in the graph for functions in the max package from the standard library.
@@ -180,6 +196,12 @@ type (
 		Log1p(x Node) (Node, error)
 		// Logistic returns 1/(1+exp(-x)).
 		Logistic(x Node) (Node, error)
+		// Min returns the minimum between x and y.
+		Min(x, y Node) (Node, error)
+		// Max returns the maximum between x and y.
+		Max(x, y Node) (Node, error)
+		// Pow returns x to the power of y.
+		Pow(x, y Node) (Node, error)
 		// Round returns the nearest integer of x.
 		Round(x Node) (Node, error)
 		// Rsqrt returns 1/sqrt(x).
