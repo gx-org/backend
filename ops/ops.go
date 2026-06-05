@@ -73,6 +73,9 @@ type (
 		// ShapeBuilder returns the implementation for function shape package.
 		Shape() ShapeBuilder
 
+		// RandomBuilder returns the implementation for function rand package.
+		Random() RandomBuilder
+
 		// DType returns the implementation for functions in the dtype package.
 		DType() DTypeBuilder
 
@@ -214,6 +217,13 @@ type (
 		Sqrt(x Node) (Node, error)
 		// Tanh returns the hyperbolic tangent of x.
 		Tanh(x Node) (Node, error)
+	}
+
+	// RandomBuilder returns the implementation for function rand package.
+	RandomBuilder interface {
+		// RngBitGenerator generates random values of the given shape using the provided RNG state.
+		// It returns the updated RNG state and the generated values.
+		RngBitGenerator(state Node, shape *shape.Shape) (Node, Node, error)
 	}
 )
 
