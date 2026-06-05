@@ -152,6 +152,9 @@ type (
 		// Dot product between x and y.
 		Dot(x, y Node) (Node, error)
 
+		// DotGeneral is a generalised dot product (e.g. for einsum) between x and y.
+		DotGeneral(x, y Node, batchAxes, reduceAxes [2][]int) (Node, error)
+
 		// Iota returns a node filling an array with values from 0 to number of elements-1.
 		Iota(sh *shape.Shape, iotaAxis int) (Node, error)
 
