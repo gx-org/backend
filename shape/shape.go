@@ -19,14 +19,14 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/gx-org/backend/dtype"
+	"github.com/gx-org/backend/dtypes"
 )
 
 // Shape represents the shape of an array, that is the datatype of the
 // elements stored in the array and a list of axis lengths in major-to-minor
 // order.
 type Shape struct {
-	DType       dtype.DataType
+	DType       dtypes.DataType
 	AxisLengths []int
 }
 
@@ -51,7 +51,7 @@ func (s *Shape) Size() int {
 
 // ByteSize returns the size of the buffer, in bytes, to store the data specified by the shape.
 func (s *Shape) ByteSize() int {
-	return dtype.Sizeof(s.DType) * s.Size()
+	return dtypes.Sizeof(s.DType) * s.Size()
 }
 
 // Equal returns true if o represents the same shape.
@@ -79,7 +79,7 @@ func (s *Shape) String() string {
 }
 
 // ArrayI is a minimum generic array interface.
-type ArrayI[T dtype.GoDataType] interface {
+type ArrayI[T dtypes.GoDataType] interface {
 	// Shape returns the size of all the axes of the array.
 	Shape() []int
 

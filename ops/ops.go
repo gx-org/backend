@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"go/ast"
 
-	"github.com/gx-org/backend/dtype"
+	"github.com/gx-org/backend/dtypes"
 	"github.com/gx-org/backend/platform"
 	"github.com/gx-org/backend/shape"
 )
@@ -123,7 +123,7 @@ type (
 		Concat(axis int, nodes []Node) (Node, error)
 
 		// Cast returns a cast/convert operator node.
-		Cast(x Node, target dtype.DataType) (Node, error)
+		Cast(x Node, target dtypes.DataType) (Node, error)
 
 		// Slice returns a slice on a node.
 		Slice(x Node, index int) (Node, error)
@@ -144,7 +144,7 @@ type (
 	// DTypeBuilder creates node related to data types.
 	DTypeBuilder interface {
 		// Bitcast casts a byte array into a given data type.
-		Bitcast(x Node, target dtype.DataType) (Node, error)
+		Bitcast(x Node, target dtypes.DataType) (Node, error)
 	}
 
 	// NumBuilder creates node in the graph for functions in the num package from the standard library.
@@ -159,7 +159,7 @@ type (
 		Iota(sh *shape.Shape, iotaAxis int) (Node, error)
 
 		// ArgMinMax applies a min or max operator over an axis
-		ArgMinMax(x Node, axis int, outputDType dtype.DataType, isMin bool) (Node, error)
+		ArgMinMax(x Node, axis int, outputDType dtypes.DataType, isMin bool) (Node, error)
 
 		// ReduceMax applies max over axes.
 		ReduceMax(x Node, axes []int) (Node, error)

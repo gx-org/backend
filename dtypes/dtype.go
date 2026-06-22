@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package dtype defines data types that can be supported by a platform.
-package dtype
+// Package dtypes defines data types that can be supported by a platform.
+package dtypes
 
 import (
 	"fmt"

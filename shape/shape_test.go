@@ -18,7 +18,7 @@ package shape
 import (
 	"testing"
 
-	"github.com/gx-org/backend/dtype"
+	"github.com/gx-org/backend/dtypes"
 )
 
 func TestShapeEqual(t *testing.T) {
@@ -28,21 +28,21 @@ func TestShapeEqual(t *testing.T) {
 	}{
 		{
 			desc:  "dtype",
-			x:     Shape{DType: dtype.Float32},
-			is:    Shape{DType: dtype.Float32},
-			isNot: Shape{DType: dtype.Int32},
+			x:     Shape{DType: dtypes.Float32},
+			is:    Shape{DType: dtypes.Float32},
+			isNot: Shape{DType: dtypes.Int32},
 		},
 		{
 			desc:  "number of axis",
-			x:     Shape{DType: dtype.Float32, AxisLengths: []int{1, 2}},
-			is:    Shape{DType: dtype.Float32, AxisLengths: []int{1, 2}},
-			isNot: Shape{DType: dtype.Float32, AxisLengths: []int{1}},
+			x:     Shape{DType: dtypes.Float32, AxisLengths: []int{1, 2}},
+			is:    Shape{DType: dtypes.Float32, AxisLengths: []int{1, 2}},
+			isNot: Shape{DType: dtypes.Float32, AxisLengths: []int{1}},
 		},
 		{
 			desc:  "axis lengths",
-			x:     Shape{DType: dtype.Float32, AxisLengths: []int{1, 2}},
-			is:    Shape{DType: dtype.Float32, AxisLengths: []int{1, 2}},
-			isNot: Shape{DType: dtype.Float32, AxisLengths: []int{1, 3}},
+			x:     Shape{DType: dtypes.Float32, AxisLengths: []int{1, 2}},
+			is:    Shape{DType: dtypes.Float32, AxisLengths: []int{1, 2}},
+			isNot: Shape{DType: dtypes.Float32, AxisLengths: []int{1, 3}},
 		},
 	}
 	for i, test := range tests {
