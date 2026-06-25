@@ -51,7 +51,7 @@ func (s *Shape) Size() int {
 
 // ByteSize returns the size of the buffer, in bytes, to store the data specified by the shape.
 func (s *Shape) ByteSize() int {
-	return dtypes.Sizeof(s.DType) * s.Size()
+	return s.DType.Size() * s.Size()
 }
 
 // Equal returns true if o represents the same shape.
