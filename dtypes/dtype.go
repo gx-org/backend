@@ -34,7 +34,7 @@ const (
 	Int64
 	Uint32
 	Uint64
-	Bfloat16
+	BFloat16
 	Float32
 	Float64
 
@@ -54,7 +54,7 @@ func (dt DType) String() string {
 		return "uint32"
 	case Uint64:
 		return "uint64"
-	case Bfloat16:
+	case BFloat16:
 		return "bfloat16"
 	case Float32:
 		return "float32"
@@ -121,7 +121,7 @@ type AlgebraType interface {
 
 // IsAlgebra returns true if the data type is an algebra type.
 func IsAlgebra(d DType) bool {
-	return IsFloat(d) || IsInteger(d) || d == Bfloat16
+	return IsFloat(d) || IsInteger(d) || d == BFloat16
 }
 
 // GoDataType that can be stored in an array.
@@ -136,7 +136,7 @@ func Generic[T GoDataType]() DType {
 	case bool:
 		return Bool
 	case Bfloat16T:
-		return Bfloat16
+		return BFloat16
 	case float32:
 		return Float32
 	case float64:
@@ -178,7 +178,7 @@ func (dt DType) Size() int {
 		return Uint32Size
 	case Uint64:
 		return Uint64Size
-	case Bfloat16:
+	case BFloat16:
 		return Bfloat16Size
 	case Float32:
 		return Float32Size
