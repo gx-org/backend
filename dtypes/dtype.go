@@ -165,8 +165,8 @@ const (
 	Float64Size  = 8
 )
 
-// Sizeof returns the size of an atomic value of a data type.
-func Sizeof(dt DType) int {
+// Size returns the size of an atomic value of a data type in bytes.
+func (dt DType) Size() int {
 	switch dt {
 	case Bool:
 		return BoolSize
