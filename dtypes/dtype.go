@@ -64,8 +64,8 @@ func (dt DType) String() string {
 	return "invalid"
 }
 
-// Float is a constraint supporting floating-point type.
-type Float interface {
+// GoFloat is a constraint supporting floating-point type.
+type GoFloat interface {
 	~float32 | ~float64
 }
 
@@ -116,7 +116,7 @@ func IsInteger(d DType) bool {
 
 // AlgebraType are types on which common algebra operations between integers and floats are supported.
 type AlgebraType interface {
-	Float | IntegerType | Bfloat16T
+	GoFloat | IntegerType | Bfloat16T
 }
 
 // IsAlgebra returns true if the data type is an algebra type.
