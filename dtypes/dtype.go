@@ -21,12 +21,12 @@ import (
 	"unsafe"
 )
 
-// DataType is the type of an atomic value or type of the data stored in an array.
-type DataType uint32
+// DType is the type of an atomic value or type of the data stored in an array.
+type DType uint32
 
 // All supported types
 const (
-	Invalid DataType = iota
+	Invalid DType = iota
 
 	Bool
 	Int
@@ -42,7 +42,7 @@ const (
 )
 
 // String returns a string representation of a kind.
-func (dt DataType) String() string {
+func (dt DType) String() string {
 	switch dt {
 	case Bool:
 		return "bool"
@@ -70,7 +70,7 @@ type Float interface {
 }
 
 // IsFloat returns true if the data type is a float.
-func IsFloat(d DataType) bool {
+func IsFloat(d DType) bool {
 	return d == Float32 || d == Float64
 }
 
@@ -80,7 +80,7 @@ type Signed interface {
 }
 
 // IsSigned returns true if the data type is a signed integer.
-func IsSigned(d DataType) bool {
+func IsSigned(d DType) bool {
 	return d == Int32 || d == Int64
 }
 
@@ -90,7 +90,7 @@ type Unsigned interface {
 }
 
 // IsUnsigned returns true if the data type is a unsigned integer.
-func IsUnsigned(d DataType) bool {
+func IsUnsigned(d DType) bool {
 	return d == Uint32 || d == Uint64
 }
 
@@ -100,7 +100,7 @@ type NonAlgebraType interface {
 }
 
 // IsNonAlgebra returns true if the data type is a non algebra data type.
-func IsNonAlgebra(d DataType) bool {
+func IsNonAlgebra(d DType) bool {
 	return d == Bool
 }
 
@@ -110,7 +110,7 @@ type IntegerType interface {
 }
 
 // IsInteger returns true if the data type is an integer.
-func IsInteger(d DataType) bool {
+func IsInteger(d DType) bool {
 	return IsSigned(d) || IsUnsigned(d)
 }
 
@@ -120,7 +120,7 @@ type AlgebraType interface {
 }
 
 // IsAlgebra returns true if the data type is an algebra type.
-func IsAlgebra(d DataType) bool {
+func IsAlgebra(d DType) bool {
 	return IsFloat(d) || IsInteger(d) || d == Bfloat16
 }
 
@@ -130,7 +130,7 @@ type GoDataType interface {
 }
 
 // Generic returns a dtype from a Go type.
-func Generic[T GoDataType]() DataType {
+func Generic[T GoDataType]() DType {
 	var t T
 	switch (any(t)).(type) {
 	case bool:
@@ -166,7 +166,7 @@ const (
 )
 
 // Sizeof returns the size of an atomic value of a data type.
-func Sizeof(dt DataType) int {
+func Sizeof(dt DType) int {
 	switch dt {
 	case Bool:
 		return BoolSize
