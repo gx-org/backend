@@ -26,7 +26,7 @@ import (
 // elements stored in the array and a list of axis lengths in major-to-minor
 // order.
 type Shape struct {
-	DType       dtypes.DataType
+	DType       dtypes.DType
 	AxisLengths []int
 }
 
