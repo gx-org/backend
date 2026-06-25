@@ -129,8 +129,8 @@ type Supported interface {
 	AlgebraType | NonAlgebraType
 }
 
-// Generic returns a dtype from a Go type.
-func Generic[T Supported]() DType {
+// FromGenericsType returns a dtype from a Go type.
+func FromGenericsType[T Supported]() DType {
 	var t T
 	switch (any(t)).(type) {
 	case bool:
