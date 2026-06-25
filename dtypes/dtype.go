@@ -26,7 +26,7 @@ type DType uint32
 
 // All supported types
 const (
-	Invalid DType = iota
+	InvalidDType DType = iota
 
 	Bool
 	Int
@@ -150,7 +150,7 @@ func Generic[T GoDataType]() DType {
 	case uint64:
 		return Uint64
 	}
-	return Invalid
+	return InvalidDType
 }
 
 // Sizes of data type (in bytes).
