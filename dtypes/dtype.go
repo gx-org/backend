@@ -124,13 +124,13 @@ func IsAlgebra(d DType) bool {
 	return IsFloat(d) || IsInteger(d) || d == BFloat16
 }
 
-// GoDataType that can be stored in an array.
-type GoDataType interface {
+// Supported that can be stored in an array.
+type Supported interface {
 	AlgebraType | NonAlgebraType
 }
 
 // Generic returns a dtype from a Go type.
-func Generic[T GoDataType]() DType {
+func Generic[T Supported]() DType {
 	var t T
 	switch (any(t)).(type) {
 	case bool:

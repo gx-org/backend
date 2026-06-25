@@ -79,7 +79,7 @@ func (s *Shape) String() string {
 }
 
 // ArrayI is a minimum generic array interface.
-type ArrayI[T dtypes.GoDataType] interface {
+type ArrayI[T dtypes.Supported] interface {
 	// Shape returns the size of all the axes of the array.
 	Shape() []int
 
