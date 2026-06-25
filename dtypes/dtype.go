@@ -38,7 +38,7 @@ const (
 	Float32
 	Float64
 
-	MaxDataType = 1 << 16 // Maximum value for a datatype.
+	MaxDType = 1 << 16 // Maximum value for a datatype.
 )
 
 // String returns a string representation of a kind.
