@@ -19,6 +19,8 @@ import (
 	"fmt"
 	"reflect"
 	"unsafe"
+
+	"google3/third_party/golang/github_com/gomlx/compute/v/v0/dtypes/bfloat16/bfloat16"
 )
 
 // DType is the type of an atomic value or type of the data stored in an array.
@@ -116,7 +118,7 @@ func IsInteger(d DType) bool {
 
 // AlgebraType are types on which common algebra operations between integers and floats are supported.
 type AlgebraType interface {
-	GoFloat | IntegerType | Bfloat16T
+	GoFloat | IntegerType | bfloat16.BFloat16
 }
 
 // IsAlgebra returns true if the data type is an algebra type.
@@ -135,7 +137,7 @@ func FromGenericsType[T Supported]() DType {
 	switch (any(t)).(type) {
 	case bool:
 		return Bool
-	case Bfloat16T:
+	case bfloat16.BFloat16:
 		return BFloat16
 	case float32:
 		return Float32
