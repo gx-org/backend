@@ -20,7 +20,7 @@ import (
 	"reflect"
 	"unsafe"
 
-	"google3/third_party/golang/github_com/gomlx/compute/v/v0/dtypes/bfloat16/bfloat16"
+	"github.com/gomlx/compute/dtypes/bfloat16"
 )
 
 // DType is the type of an atomic value or type of the data stored in an array.
@@ -48,6 +48,8 @@ func (dt DType) String() string {
 	switch dt {
 	case Bool:
 		return "bool"
+	case Int:
+		return "int"
 	case Int32:
 		return "int32"
 	case Int64:
@@ -78,7 +80,7 @@ func IsFloat(d DType) bool {
 
 // Signed is a constraint supporting signed integer type.
 type Signed interface {
-	~int32 | ~int64
+	int | ~int32 | ~int64
 }
 
 // IsSigned returns true if the data type is a signed integer.
@@ -143,6 +145,8 @@ func FromGenericsType[T Supported]() DType {
 		return Float32
 	case float64:
 		return Float64
+	case int:
+		return Int
 	case int32:
 		return Int32
 	case int64:
@@ -172,6 +176,8 @@ func (dt DType) Size() int {
 	switch dt {
 	case Bool:
 		return BoolSize
+	case Int:
+		return Int64Size
 	case Int32:
 		return Int32Size
 	case Int64:
