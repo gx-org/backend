@@ -129,7 +129,7 @@ type (
 		Slice(x Node, index int) (Node, error)
 
 		// Set returns a node to set a slice in an array.
-		Set(x, updates, index Node) (Node, error)
+		Set(x, updates Node, index []Node) (Node, error)
 
 		// DotGeneral returns a general dot operator node.
 		DotGeneral(x, y Node, batchAxes, reduceAxes [2][]int) (Node, error)
