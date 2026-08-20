@@ -1,2 +1,4 @@
+github.com/gomlx/gopjrt v0.10.0 h1:mb/LeIk9xkaW5hh9oB5hEGuCbnqr81D0WmJsl+o1gY0=
+github.com/gomlx/gopjrt v0.10.0/go.mod h1:cUcwwDra6Uf9RTysQyv51YidUOk12dcz2HbjVi2J0S0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=

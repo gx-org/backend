@@ -20,7 +20,7 @@ import (
 	"reflect"
 	"unsafe"
 
-	"github.com/gomlx/compute/dtypes/bfloat16"
+	"github.com/gomlx/gopjrt/dtypes/bfloat16"
 )
 
 // DType is the type of an atomic value or type of the data stored in an array.

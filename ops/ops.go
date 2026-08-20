@@ -98,6 +98,12 @@ type (
 		// Constant returns a node representing a numerical constant value in the graph.
 		Constant(value platform.HostBuffer) (Node, error)
 
+		// NewAtomLiteral creates a node from a constant atom.
+		NewAtomLiteral(v any) (Node, error)
+
+		// NewArrayLiteral creates a node from a constant array.
+		NewArrayLiteral(flat any, axlengths ...int) (Node, error)
+
 		// Tuple returns a node representing a tuple of nodes.
 		Tuple(nodes []Node) (Tuple, error)
 
