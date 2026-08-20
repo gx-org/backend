@@ -48,7 +48,10 @@ jobs:
     - name: Checkout the main branch
       run: git fetch origin ; git checkout -b main origin/main
 
-    - name: Test the main branch
+    - name: Tidy after merge 
+      run: go mod tidy
+
+    - name: Test the merge with the main branch
       run: go test -v ./...
 
     - name: Setup an identity
