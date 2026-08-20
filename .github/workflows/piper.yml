@@ -39,16 +39,10 @@ jobs:
     - name: Setup an identity
       run: git config user.email "noreply@github.com" && git config user.name "Github Action"
 
-    - name: Tidy 
-      run: go mod tidy
-
-    - name: Test the piper branch
-      run: go test -v ./...
-
     - name: Checkout the main branch
       run: git fetch origin ; git checkout -b main origin/main
 
-    - name: Tidy after merge 
+    - name: Tidy 
       run: go mod tidy
 
     - name: Test the merge with the main branch
