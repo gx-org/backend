@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package ops defines the operations backend can build.
-package ops
+package backend
 
 import (
 	"fmt"
 	"go/ast"
 
 	"github.com/gx-org/backend/dtypes"
-	"github.com/gx-org/backend/platform"
 	"github.com/gx-org/backend/shape"
 )
 
@@ -46,7 +44,7 @@ type (
 
 	// Runner runs a node in a compiled graph.
 	Runner interface {
-		Run([]platform.Handle) (out, traces []platform.DeviceHandle, err error)
+		Run([]Handle) (out, traces []DeviceHandle, err error)
 	}
 
 	// OutputNode is an output node in the graph.
@@ -59,7 +57,7 @@ type (
 	// The GX interpreter uses this interface to build a graph for the backend.
 	Graph interface {
 		// Platform used by the graph.
-		Platform() platform.Platform
+		Platform() Platform
 
 		// Core returns the builder to build core operations.
 		Core() CoreBuilder
@@ -81,7 +79,7 @@ type (
 
 		// Compile the graph for a given device.
 		// The graph is not supposed to be modified once it has been compiled.
-		Compile(dev platform.Device, output, traced []*OutputNode, params []*shape.Shape) (Runner, error)
+		Compile(dev Device, output, traced []*OutputNode, params []*shape.Shape) (Runner, error)
 	}
 
 	// Subgraph bundles a Graph and its output node together.
@@ -96,7 +94,7 @@ type (
 		Graph() Graph
 
 		// Constant returns a node representing a numerical constant value in the graph.
-		Constant(value platform.HostBuffer) (Node, error)
+		Constant(value HostBuffer) (Node, error)
 
 		// NewAtomLiteral creates a node from a constant atom.
 		NewAtomLiteral(v any) (Node, error)

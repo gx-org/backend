@@ -15,18 +15,13 @@
 // Package backend defines the abstraction to implement for a GX backend.
 package backend
 
-import (
-	"github.com/gx-org/backend/ops"
-	"github.com/gx-org/backend/platform"
-)
-
 // Backend is a GX backend.
 type Backend interface {
 	// Platform supporting the backend.
-	Platform() platform.Platform
+	Platform() Platform
 
 	// Builder returns a new ops builder.
-	Builder(name string) (ops.Graph, error)
+	Builder(name string) (Graph, error)
 
 	// Release everything linked to the platform.
 	// It is invalid to use the platform or graph builder after this call.
