@@ -25,8 +25,8 @@ type Backend interface {
 	// Platform supporting the backend.
 	Platform() platform.Platform
 
-	// NewOps returns a new ops builder.
-	NewOps(name string) (ops.Graph, error)
+	// Builder returns a new ops builder.
+	Builder(name string) (ops.Graph, error)
 
 	// Release everything linked to the platform.
 	// It is invalid to use the platform or graph builder after this call.
