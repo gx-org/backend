@@ -57,12 +57,10 @@ type (
 	// The GX interpreter uses this interface to build a graph for the backend.
 	Function interface {
 		CoreBuilder
+		NumBuilder
 
 		// Platform used by the graph.
 		Platform() Platform
-
-		// Num returns the implementation for functions in the num package.
-		Num() NumBuilder
 
 		// Math returns the implementation for functions in the math package.
 		Math() MathBuilder
