@@ -25,7 +25,7 @@ import (
 type (
 	// Node in the graph.
 	Node interface {
-		Graph() Graph
+		Graph() Function
 	}
 
 	// Tuple bundles multiple Nodes together.
@@ -53,9 +53,9 @@ type (
 		Shape *shape.Shape
 	}
 
-	// Graph implemented by a backend.
+	// Function implemented by a backend.
 	// The GX interpreter uses this interface to build a graph for the backend.
-	Graph interface {
+	Function interface {
 		// Platform used by the graph.
 		Platform() Platform
 
@@ -84,14 +84,14 @@ type (
 
 	// Subgraph bundles a Graph and its output node together.
 	Subgraph struct {
-		Graph  Graph
+		Graph  Function
 		Result OutputNode
 	}
 
 	// CoreBuilder creates node in the graph for core operations.
 	CoreBuilder interface {
 		// Graph returns the graph in which the nodes are created into.
-		Graph() Graph
+		Graph() Function
 
 		// Constant returns a node representing a numerical constant value in the graph.
 		Constant(value HostBuffer) (Node, error)
@@ -109,7 +109,7 @@ type (
 		Call(sg *Subgraph, args ...Node) (Node, error)
 
 		// Subgraph returns a Graph instance that maps to a new subgraph.
-		Subgraph(name string, args []*shape.Shape) (Graph, error)
+		Subgraph(name string, args []*shape.Shape) (Function, error)
 
 		// Argument returns a node set by a caller when calling the function.
 		Argument(name string, shape *shape.Shape, index int) (Node, error)

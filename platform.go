@@ -25,9 +25,9 @@ type (
 		// Device returns the device managed by the backend.
 		Device(int) (Device, error)
 
-		// Release everything linked to the platform.
+		// Finalize everything linked to the platform.
 		// It is invalid to use any device from the platform after this call.
-		Release() error
+		Finalize() error
 	}
 
 	// Device running GX code.
