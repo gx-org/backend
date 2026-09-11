@@ -21,9 +21,9 @@ type Backend interface {
 	Platform() Platform
 
 	// Builder returns a new ops builder.
-	Builder(name string) (Graph, error)
+	Builder(name string) (Function, error)
 
-	// Release everything linked to the platform.
+	// Finalize everything linked to the backend.
 	// It is invalid to use the platform or graph builder after this call.
-	Release() error
+	Finalize() error
 }
