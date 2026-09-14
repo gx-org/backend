@@ -59,12 +59,10 @@ type (
 		CoreBuilder
 		MathBuilder
 		NumBuilder
+		ShapeBuilder
 
 		// Platform used by the graph.
 		Platform() Platform
-
-		// ShapeBuilder returns the implementation for function shape package.
-		Shape() ShapeBuilder
 
 		// Random returns the implementation for functions in the rand package.
 		Random() RandomBuilder
