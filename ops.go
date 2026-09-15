@@ -42,8 +42,8 @@ type (
 		Unpack() ([]Node, error)
 	}
 
-	// Runner runs a node in a compiled graph.
-	Runner interface {
+	// Executable runs a node in a compiled graph.
+	Executable interface {
 		Run([]Handle) (out, traces []DeviceHandle, err error)
 	}
 
@@ -61,7 +61,7 @@ type (
 
 		// Compile the graph for a given device.
 		// The graph is not supposed to be modified once it has been compiled.
-		Compile(dev Device, output, traced []*OutputNode, params []*shape.Shape) (Runner, error)
+		Compile(dev Device, output, traced []*OutputNode, params []*shape.Shape) (Executable, error)
 
 		// Graph returns the graph in which the nodes are created into.
 		Graph() Function
