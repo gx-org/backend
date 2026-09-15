@@ -60,12 +60,10 @@ type (
 		MathBuilder
 		NumBuilder
 		ShapeBuilder
+		RandomBuilder
 
 		// Platform used by the graph.
 		Platform() Platform
-
-		// Random returns the implementation for functions in the rand package.
-		Random() RandomBuilder
 
 		// DType returns the implementation for functions in the dtype package.
 		DType() DTypeBuilder
