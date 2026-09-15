@@ -56,29 +56,13 @@ type (
 	// Function implemented by a backend.
 	// The GX interpreter uses this interface to build a graph for the backend.
 	Function interface {
-		CoreBuilder
-		DTypeBuilder
-		MathBuilder
-		NumBuilder
-		ShapeBuilder
-		RandomBuilder
-
 		// Platform used by the graph.
 		Platform() Platform
 
 		// Compile the graph for a given device.
 		// The graph is not supposed to be modified once it has been compiled.
 		Compile(dev Device, output, traced []*OutputNode, params []*shape.Shape) (Runner, error)
-	}
 
-	// Subgraph bundles a Graph and its output node together.
-	Subgraph struct {
-		Graph  Function
-		Result OutputNode
-	}
-
-	// CoreBuilder creates node in the graph for core operations.
-	CoreBuilder interface {
 		// Graph returns the graph in which the nodes are created into.
 		Graph() Function
 
@@ -118,11 +102,17 @@ type (
 		// Cast returns a cast/convert operator node.
 		Cast(x Node, target dtypes.DType) (Node, error)
 
+		// Bitcast casts a byte array into a given data type.
+		Bitcast(x Node, target dtypes.DType) (Node, error)
+
 		// Slice returns a slice on a node.
 		Slice(x Node, index int) (Node, error)
 
 		// Set returns a node to set a slice in an array.
 		Set(x, updates Node, index []Node) (Node, error)
+
+		// Dot product between x and y.
+		Dot(x, y Node) (Node, error)
 
 		// DotGeneral returns a general dot operator node.
 		DotGeneral(x, y Node, batchAxes, reduceAxes [2][]int) (Node, error)
@@ -132,21 +122,6 @@ type (
 
 		// BroadcastInDim broadcasts data across a given set of axis.
 		BroadcastInDim(x Node, shape *shape.Shape, broadcastAxes []int) (Node, error)
-	}
-
-	// DTypeBuilder creates node related to data types.
-	DTypeBuilder interface {
-		// Bitcast casts a byte array into a given data type.
-		Bitcast(x Node, target dtypes.DType) (Node, error)
-	}
-
-	// NumBuilder creates node in the graph for functions in the num package from the standard library.
-	NumBuilder interface {
-		// Dot product between x and y.
-		Dot(x, y Node) (Node, error)
-
-		// DotGeneral is a generalised dot product (e.g. for einsum) between x and y.
-		DotGeneral(x, y Node, batchAxes, reduceAxes [2][]int) (Node, error)
 
 		// Iota returns a node filling an array with values from 0 to number of elements-1.
 		Iota(sh *shape.Shape, iotaAxis int) (Node, error)
@@ -159,22 +134,16 @@ type (
 
 		// ReduceSum sums over axes.
 		ReduceSum(x Node, axes []int) (Node, error)
-	}
 
-	// ShapeBuilder has functions to create shape-related node in the graph.
-	ShapeBuilder interface {
 		// Split an array along an axis.
 		Split(x Node, axis, numSplits int) (Node, error)
-		// Concat multiple arrays into one.
-		Concat(axis int, nodes []Node) (Node, error)
+
 		// Gather data from an array.
 		Gather(x Node, startIndices Node, indexVectorAxis int, offsetAxes []int, collapsedSliceAxes []int, startIndexMap []int, sliceSizes []int, indicesAreSorted bool) (Node, error)
+
 		// Transpose the array.
 		Transpose(x Node, permutation []int) (Node, error)
-	}
 
-	// MathBuilder creates node in the graph for functions in the max package from the standard library.
-	MathBuilder interface {
 		// Abs returns the absolute value of x.
 		Abs(x Node) (Node, error)
 		// Ceil returns the ceiling of x.
@@ -213,13 +182,16 @@ type (
 		Sqrt(x Node) (Node, error)
 		// Tanh returns the hyperbolic tangent of x.
 		Tanh(x Node) (Node, error)
-	}
 
-	// RandomBuilder returns the implementation for functions in the rand package.
-	RandomBuilder interface {
 		// RngBitGenerator generates random values of the given shape using the provided RNG state.
 		// It returns the updated RNG state and the generated values.
 		RngBitGenerator(state Node, shape *shape.Shape) (Node, Node, error)
+	}
+
+	// Subgraph bundles a Graph and its output node together.
+	Subgraph struct {
+		Graph  Function
+		Result OutputNode
 	}
 )
 
