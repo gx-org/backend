@@ -57,6 +57,7 @@ type (
 	// The GX interpreter uses this interface to build a graph for the backend.
 	Function interface {
 		CoreBuilder
+		DTypeBuilder
 		MathBuilder
 		NumBuilder
 		ShapeBuilder
@@ -64,9 +65,6 @@ type (
 
 		// Platform used by the graph.
 		Platform() Platform
-
-		// DType returns the implementation for functions in the dtype package.
-		DType() DTypeBuilder
 
 		// Compile the graph for a given device.
 		// The graph is not supposed to be modified once it has been compiled.
