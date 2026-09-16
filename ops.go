@@ -59,10 +59,6 @@ type (
 		// Platform used by the graph.
 		Platform() Platform
 
-		// Compile the graph for a given device.
-		// The graph is not supposed to be modified once it has been compiled.
-		Compile(dev Device, output, traced []*OutputNode, params []*shape.Shape) (Executable, error)
-
 		// Graph returns the graph in which the nodes are created into.
 		Graph() Function
 

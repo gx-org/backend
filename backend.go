@@ -15,6 +15,10 @@
 // Package backend defines the abstraction to implement for a GX backend.
 package backend
 
+import (
+	"github.com/gx-org/backend/shape"
+)
+
 // Backend is a GX backend.
 type Backend interface {
 	// Platform supporting the backend.
@@ -39,9 +43,9 @@ type Builder interface {
 	// unless explicitly building a sub-function.
 	Main() Function
 
-	// Compile the computation built. This immediately invalidates the Builder
-	// and returns an Executable that can be used to run the computation.
-	//
-	// The Main function must have had Return() called before compilation.
-	Compile() (Executable, error)
+	// Compile the computation built for a given device.
+	// The graph is not supposed to be modified once it has been compiled.
+	// This immediately invalidates the Builder and returns an Executable
+	// that can be used to run the computation.
+	Compile(dev Device, output, traced []*OutputNode, params []*shape.Shape) (Executable, error)
 }
