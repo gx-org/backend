@@ -23,23 +23,23 @@ import (
 )
 
 type (
-	// Node in the graph.
-	Node interface {
+	// Value in the graph.
+	Value interface {
 		Graph() Function
 	}
 
 	// Tuple bundles multiple Nodes together.
 	Tuple interface {
-		Node
+		Value
 
 		// Element returns a Node representing the ith element of the tuple.
-		Element(i int) (Node, error)
+		Element(i int) (Value, error)
 
 		// Size returns the number of elements in the tuple.
 		Size() int
 
 		// Unpack returns the tuple's constituent Nodes.
-		Unpack() ([]Node, error)
+		Unpack() ([]Value, error)
 	}
 
 	// Executable runs a node in a compiled graph.
@@ -49,7 +49,7 @@ type (
 
 	// OutputNode is an output node in the graph.
 	OutputNode struct {
-		Node  Node
+		Node  Value
 		Shape *shape.Shape
 	}
 
@@ -63,125 +63,125 @@ type (
 		Graph() Function
 
 		// Constant returns a node representing a numerical constant value in the graph.
-		Constant(value HostBuffer) (Node, error)
+		Constant(value HostBuffer) (Value, error)
 
 		// NewAtomLiteral creates a node from a constant atom.
-		NewAtomLiteral(v any) (Node, error)
+		NewAtomLiteral(v any) (Value, error)
 
 		// NewArrayLiteral creates a node from a constant array.
-		NewArrayLiteral(flat any, axlengths ...int) (Node, error)
+		NewArrayLiteral(flat any, axlengths ...int) (Value, error)
 
 		// Tuple returns a node representing a tuple of nodes.
-		Tuple(nodes []Node) (Tuple, error)
+		Tuple(nodes []Value) (Tuple, error)
 
 		// Call returns a node that invokes a subgraph.
-		Call(sg *Subgraph, args ...Node) (Node, error)
+		Call(sg *Subgraph, args ...Value) (Value, error)
 
 		// Subgraph returns a Graph instance that maps to a new subgraph.
 		Subgraph(name string, args []*shape.Shape) (Function, error)
 
 		// Argument returns a node set by a caller when calling the function.
-		Argument(name string, shape *shape.Shape, index int) (Node, error)
+		Argument(name string, shape *shape.Shape, index int) (Value, error)
 
 		// Unary returns a node applying a unary operator to a node.
-		Unary(op *ast.UnaryExpr, x Node) (Node, error)
+		Unary(op *ast.UnaryExpr, x Value) (Value, error)
 
 		// Binary returns a node applying a binary operator between two nodes.
-		Binary(op *ast.BinaryExpr, x, y Node) (Node, error)
+		Binary(op *ast.BinaryExpr, x, y Value) (Value, error)
 
 		// Reshape returns a reshape operator node.
-		Reshape(x Node, axisLengths []int) (Node, error)
+		Reshape(x Value, axisLengths []int) (Value, error)
 
 		// Concat concatenates multiple arrays into a single array.
-		Concat(axis int, nodes []Node) (Node, error)
+		Concat(axis int, nodes []Value) (Value, error)
 
 		// Cast returns a cast/convert operator node.
-		Cast(x Node, target dtypes.DType) (Node, error)
+		Cast(x Value, target dtypes.DType) (Value, error)
 
 		// Bitcast casts a byte array into a given data type.
-		Bitcast(x Node, target dtypes.DType) (Node, error)
+		Bitcast(x Value, target dtypes.DType) (Value, error)
 
 		// Slice returns a slice on a node.
-		Slice(x Node, index int) (Node, error)
+		Slice(x Value, index int) (Value, error)
 
 		// Set returns a node to set a slice in an array.
-		Set(x, updates Node, index []Node) (Node, error)
+		Set(x, updates Value, index []Value) (Value, error)
 
 		// Dot product between x and y.
-		Dot(x, y Node) (Node, error)
+		Dot(x, y Value) (Value, error)
 
 		// DotGeneral returns a general dot operator node.
-		DotGeneral(x, y Node, batchAxes, reduceAxes [2][]int) (Node, error)
+		DotGeneral(x, y Value, batchAxes, reduceAxes [2][]int) (Value, error)
 
 		// While returns a while loop node.
-		While(cond, body *Subgraph, state Node) (Node, error)
+		While(cond, body *Subgraph, state Value) (Value, error)
 
 		// BroadcastInDim broadcasts data across a given set of axis.
-		BroadcastInDim(x Node, shape *shape.Shape, broadcastAxes []int) (Node, error)
+		BroadcastInDim(x Value, shape *shape.Shape, broadcastAxes []int) (Value, error)
 
 		// Iota returns a node filling an array with values from 0 to number of elements-1.
-		Iota(sh *shape.Shape, iotaAxis int) (Node, error)
+		Iota(sh *shape.Shape, iotaAxis int) (Value, error)
 
 		// ArgMinMax applies a min or max operator over an axis
-		ArgMinMax(x Node, axis int, outputDType dtypes.DType, isMin bool) (Node, error)
+		ArgMinMax(x Value, axis int, outputDType dtypes.DType, isMin bool) (Value, error)
 
 		// ReduceMax applies max over axes.
-		ReduceMax(x Node, axes []int) (Node, error)
+		ReduceMax(x Value, axes []int) (Value, error)
 
 		// ReduceSum sums over axes.
-		ReduceSum(x Node, axes []int) (Node, error)
+		ReduceSum(x Value, axes []int) (Value, error)
 
 		// Split an array along an axis.
-		Split(x Node, axis, numSplits int) (Node, error)
+		Split(x Value, axis, numSplits int) (Value, error)
 
 		// Gather data from an array.
-		Gather(x Node, startIndices Node, indexVectorAxis int, offsetAxes []int, collapsedSliceAxes []int, startIndexMap []int, sliceSizes []int, indicesAreSorted bool) (Node, error)
+		Gather(x Value, startIndices Value, indexVectorAxis int, offsetAxes []int, collapsedSliceAxes []int, startIndexMap []int, sliceSizes []int, indicesAreSorted bool) (Value, error)
 
 		// Transpose the array.
-		Transpose(x Node, permutation []int) (Node, error)
+		Transpose(x Value, permutation []int) (Value, error)
 
 		// Abs returns the absolute value of x.
-		Abs(x Node) (Node, error)
+		Abs(x Value) (Value, error)
 		// Ceil returns the ceiling of x.
-		Ceil(x Node) (Node, error)
+		Ceil(x Value) (Value, error)
 		// Cos returns the cosine of x.
-		Cos(x Node) (Node, error)
+		Cos(x Value) (Value, error)
 		// Erf returns the error function of x.
-		Erf(x Node) (Node, error)
+		Erf(x Value) (Value, error)
 		// Exp returns the exponential of x.
-		Exp(x Node) (Node, error)
+		Exp(x Value) (Value, error)
 		// Expm1 returns Exp(x)-1.
-		Expm1(x Node) (Node, error)
+		Expm1(x Value) (Value, error)
 		// Floor returns the floor of x.
-		Floor(x Node) (Node, error)
+		Floor(x Value) (Value, error)
 		// Log returns the natural logarithm of x.
-		Log(x Node) (Node, error)
+		Log(x Value) (Value, error)
 		// Log1p returns log(1+x).
-		Log1p(x Node) (Node, error)
+		Log1p(x Value) (Value, error)
 		// Logistic returns 1/(1+exp(-x)).
-		Logistic(x Node) (Node, error)
+		Logistic(x Value) (Value, error)
 		// Min returns the minimum between x and y.
-		Min(x, y Node) (Node, error)
+		Min(x, y Value) (Value, error)
 		// Max returns the maximum between x and y.
-		Max(x, y Node) (Node, error)
+		Max(x, y Value) (Value, error)
 		// Pow returns x to the power of y.
-		Pow(x, y Node) (Node, error)
+		Pow(x, y Value) (Value, error)
 		// Round returns the nearest integer of x.
-		Round(x Node) (Node, error)
+		Round(x Value) (Value, error)
 		// Rsqrt returns 1/sqrt(x).
-		Rsqrt(x Node) (Node, error)
+		Rsqrt(x Value) (Value, error)
 		// Sign returns the sign of x.
-		Sign(x Node) (Node, error)
+		Sign(x Value) (Value, error)
 		// Sin returns the sine of x.
-		Sin(x Node) (Node, error)
+		Sin(x Value) (Value, error)
 		// Sqrt returns sqrt(x).
-		Sqrt(x Node) (Node, error)
+		Sqrt(x Value) (Value, error)
 		// Tanh returns the hyperbolic tangent of x.
-		Tanh(x Node) (Node, error)
+		Tanh(x Value) (Value, error)
 
 		// RngBitGenerator generates random values of the given shape using the provided RNG state.
 		// It returns the updated RNG state and the generated values.
-		RngBitGenerator(state Node, shape *shape.Shape) (Node, Node, error)
+		RngBitGenerator(state Value, shape *shape.Shape) (Value, Value, error)
 	}
 
 	// Subgraph bundles a Graph and its output node together.
