@@ -83,8 +83,11 @@ type (
 		// Argument returns a node set by a caller when calling the function.
 		Argument(name string, shape *shape.Shape, index int) (Value, error)
 
-		// Unary returns a node applying a unary operator to a node.
-		Unary(op *ast.UnaryExpr, x Value) (Value, error)
+		// LogicalNot returns the logical not of x.
+		LogicalNot(x Value) (Value, error)
+
+		// Neg returns the negation of x.
+		Neg(x Value) (Value, error)
 
 		// Binary returns a node applying a binary operator between two nodes.
 		Binary(op *ast.BinaryExpr, x, y Value) (Value, error)
