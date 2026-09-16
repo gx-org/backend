@@ -16,7 +16,6 @@ package backend
 
 import (
 	"fmt"
-	"go/ast"
 
 	"github.com/gx-org/backend/dtypes"
 	"github.com/gx-org/backend/shape"
@@ -89,8 +88,59 @@ type (
 		// Neg returns the negation of x.
 		Neg(x Value) (Value, error)
 
-		// Binary returns a node applying a binary operator between two nodes.
-		Binary(op *ast.BinaryExpr, x, y Value) (Value, error)
+		// Add returns the addition of x and y.
+		Add(x, y Value) (Value, error)
+
+		// Sub returns the subtraction of y from x.
+		Sub(x, y Value) (Value, error)
+
+		// Mul returns the multiplication of x and y.
+		Mul(x, y Value) (Value, error)
+
+		// Div returns the division of x by y.
+		Div(x, y Value) (Value, error)
+
+		// Rem returns the remainder of x divided by y.
+		Rem(x, y Value) (Value, error)
+
+		// Equal returns a boolean node checking if x == y.
+		Equal(x, y Value) (Value, error)
+
+		// NotEqual returns a boolean node checking if x != y.
+		NotEqual(x, y Value) (Value, error)
+
+		// LessThan returns a boolean node checking if x < y.
+		LessThan(x, y Value) (Value, error)
+
+		// LessOrEqual returns a boolean node checking if x <= y.
+		LessOrEqual(x, y Value) (Value, error)
+
+		// GreaterThan returns a boolean node checking if x > y.
+		GreaterThan(x, y Value) (Value, error)
+
+		// GreaterOrEqual returns a boolean node checking if x >= y.
+		GreaterOrEqual(x, y Value) (Value, error)
+
+		// ShiftLeft returns a node shifting x left by y.
+		ShiftLeft(x, y Value) (Value, error)
+
+		// ShiftRight returns a node shifting x right by y.
+		ShiftRight(x, y Value) (Value, error)
+
+		// BitwiseAnd returns the bitwise AND of x and y.
+		BitwiseAnd(x, y Value) (Value, error)
+
+		// BitwiseOr returns the bitwise OR of x and y.
+		BitwiseOr(x, y Value) (Value, error)
+
+		// BitwiseXor returns the bitwise XOR of x and y.
+		BitwiseXor(x, y Value) (Value, error)
+
+		// LogicalAnd returns the logical AND of x and y.
+		LogicalAnd(x, y Value) (Value, error)
+
+		// LogicalOr returns the logical OR of x and y.
+		LogicalOr(x, y Value) (Value, error)
 
 		// Reshape returns a reshape operator node.
 		Reshape(x Value, axisLengths []int) (Value, error)
