@@ -21,9 +21,27 @@ type Backend interface {
 	Platform() Platform
 
 	// Builder returns a new ops builder.
-	Builder(name string) (Function, error)
+	Builder(name string) (Builder, error)
 
 	// Finalize everything linked to the backend.
 	// It is invalid to use the platform or graph builder after this call.
 	Finalize() error
+}
+
+// Builder builds a computation.
+type Builder interface {
+	// Name of the computation being built.
+	Name() string
+
+	// Main returns the main function of this computation, named MainName.
+	// Operations added to Main become part of the compiled computation.
+	// This is the default function where all operations should be added
+	// unless explicitly building a sub-function.
+	Main() Function
+
+	// Compile the computation built. This immediately invalidates the Builder
+	// and returns an Executable that can be used to run the computation.
+	//
+	// The Main function must have had Return() called before compilation.
+	Compile() (Executable, error)
 }
