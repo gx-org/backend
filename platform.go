@@ -22,23 +22,14 @@ type (
 		// Name of the platform.
 		Name() string
 
-		// Device returns the device managed by the backend.
-		Device(int) (Device, error)
+		// Send raw data to the device.
+		Send(dev DeviceNum, buf []byte, sh *shape.Shape) (DeviceHandle, error)
 
 		// Finalize everything linked to the platform.
 		// It is invalid to use any device from the platform after this call.
 		Finalize() error
 	}
 
-	// Device running GX code.
-	Device interface {
-		// Platform returns the host and its devices owning this device.
-		Platform() Platform
-
-		// Send raw data to the device.
-		Send(buf []byte, sh *shape.Shape) (DeviceHandle, error)
-
-		// Ordinal of the device on the platform.
-		Ordinal() int
-	}
+	// DeviceNum represents a device ordinal on the platform.
+	DeviceNum int
 )

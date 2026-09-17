@@ -26,7 +26,7 @@ type (
 		Shape() *shape.Shape
 
 		// ToDevice transfers the handle to a device.
-		ToDevice(Device) (DeviceHandle, error)
+		ToDevice(DeviceNum) (DeviceHandle, error)
 
 		// ToHost fetches the data from the handle and write it to buffer.
 		ToHost(buffer HostBuffer) error
@@ -37,7 +37,7 @@ type (
 		Handle
 
 		// Device on which the array is located.
-		Device() Device
+		Device() DeviceNum
 	}
 
 	// HostBuffer is a handle to a buffer of data located locally on the platform,

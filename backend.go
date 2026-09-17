@@ -47,5 +47,5 @@ type Builder interface {
 	// The graph is not supposed to be modified once it has been compiled.
 	// This immediately invalidates the Builder and returns an Executable
 	// that can be used to run the computation.
-	Compile(dev Device, output, traced []*OutputNode, params []*shape.Shape) (Executable, error)
+	Compile(dev DeviceNum, output, traced []*OutputNode, params []*shape.Shape) (Executable, error)
 }
