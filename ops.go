@@ -62,7 +62,7 @@ type (
 		Graph() Function
 
 		// Constant returns a node representing a numerical constant value in the graph.
-		Constant(value HostBuffer) (Value, error)
+		Constant(data []byte, shape *shape.Shape) (Value, error)
 
 		// NewAtomLiteral creates a node from a constant atom.
 		NewAtomLiteral(v any) (Value, error)
