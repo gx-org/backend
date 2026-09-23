@@ -15,14 +15,14 @@
 package backend
 
 import (
-	"github.com/gx-org/backend/shape"
+	"github.com/gx-org/backend/shapes"
 )
 
 type (
 	// Handle to an array managed by the platform.
 	Handle interface {
 		// Shape of the underlying array.
-		Shape() *shape.Shape
+		Shape() *shapes.Shape
 
 		// ToDevice transfers the handle to a device.
 		ToDevice(DeviceNum) (DeviceHandle, error)

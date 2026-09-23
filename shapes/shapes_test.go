@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package shape defines the shape of an array.
-package shape
+// Package shapes defines the shape of an array.
+package shapes
 
 import (
 	"testing"

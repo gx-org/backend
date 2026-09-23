@@ -18,7 +18,7 @@ import (
 	"fmt"
 
 	"github.com/gx-org/backend/dtypes"
-	"github.com/gx-org/backend/shape"
+	"github.com/gx-org/backend/shapes"
 )
 
 type (
@@ -49,7 +49,7 @@ type (
 	// OutputNode is an output node in the graph.
 	OutputNode struct {
 		Node  Value
-		Shape *shape.Shape
+		Shape *shapes.Shape
 	}
 
 	// Function implemented by a backend.
@@ -62,7 +62,7 @@ type (
 		Graph() Function
 
 		// Constant returns a node representing a numerical constant value in the graph.
-		Constant(data []byte, shape *shape.Shape) (Value, error)
+		Constant(data []byte, shape *shapes.Shape) (Value, error)
 
 		// NewAtomLiteral creates a node from a constant atom.
 		NewAtomLiteral(v any) (Value, error)
@@ -77,10 +77,10 @@ type (
 		Call(sg *Subgraph, args ...Value) (Value, error)
 
 		// Subgraph returns a Graph instance that maps to a new subgraph.
-		Subgraph(name string, args []*shape.Shape) (Function, error)
+		Subgraph(name string, args []*shapes.Shape) (Function, error)
 
 		// Argument returns a node set by a caller when calling the function.
-		Argument(name string, shape *shape.Shape, index int) (Value, error)
+		Argument(name string, shape *shapes.Shape, index int) (Value, error)
 
 		// LogicalNot returns the logical not of x.
 		LogicalNot(x Value) (Value, error)
@@ -170,10 +170,10 @@ type (
 		While(cond, body *Subgraph, state Value) (Value, error)
 
 		// BroadcastInDim broadcasts data across a given set of axis.
-		BroadcastInDim(x Value, shape *shape.Shape, broadcastAxes []int) (Value, error)
+		BroadcastInDim(x Value, shape *shapes.Shape, broadcastAxes []int) (Value, error)
 
 		// Iota returns a node filling an array with values from 0 to number of elements-1.
-		Iota(sh *shape.Shape, iotaAxis int) (Value, error)
+		Iota(sh *shapes.Shape, iotaAxis int) (Value, error)
 
 		// ArgMinMax applies a min or max operator over an axis
 		ArgMinMax(x Value, axis int, outputDType dtypes.DType, isMin bool) (Value, error)
@@ -234,7 +234,7 @@ type (
 
 		// RngBitGenerator generates random values of the given shape using the provided RNG state.
 		// It returns the updated RNG state and the generated values.
-		RngBitGenerator(state Value, shape *shape.Shape) (Value, Value, error)
+		RngBitGenerator(state Value, shape *shapes.Shape) (Value, Value, error)
 	}
 
 	// Subgraph bundles a Graph and its output node together.
