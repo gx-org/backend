@@ -34,15 +34,15 @@ func TestShapeEqual(t *testing.T) {
 		},
 		{
 			desc:  "number of axis",
-			x:     Shape{DType: dtypes.Float32, AxisLengths: []int{1, 2}},
-			is:    Shape{DType: dtypes.Float32, AxisLengths: []int{1, 2}},
-			isNot: Shape{DType: dtypes.Float32, AxisLengths: []int{1}},
+			x:     Shape{DType: dtypes.Float32, Dimensions: []int{1, 2}},
+			is:    Shape{DType: dtypes.Float32, Dimensions: []int{1, 2}},
+			isNot: Shape{DType: dtypes.Float32, Dimensions: []int{1}},
 		},
 		{
 			desc:  "axis lengths",
-			x:     Shape{DType: dtypes.Float32, AxisLengths: []int{1, 2}},
-			is:    Shape{DType: dtypes.Float32, AxisLengths: []int{1, 2}},
-			isNot: Shape{DType: dtypes.Float32, AxisLengths: []int{1, 3}},
+			x:     Shape{DType: dtypes.Float32, Dimensions: []int{1, 2}},
+			is:    Shape{DType: dtypes.Float32, Dimensions: []int{1, 2}},
+			isNot: Shape{DType: dtypes.Float32, Dimensions: []int{1, 3}},
 		},
 	}
 	for i, test := range tests {

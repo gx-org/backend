@@ -26,27 +26,27 @@ import (
 // elements stored in the array and a list of axis lengths in major-to-minor
 // order.
 type Shape struct {
-	DType       dtypes.DType
-	AxisLengths []int
+	DType      dtypes.DType
+	Dimensions []int
 }
 
 // OuterAxisLength returns the shape's outermost axis length, or 1 for rank-0 shapes.
 func (s *Shape) OuterAxisLength() int {
-	if len(s.AxisLengths) == 0 {
+	if len(s.Dimensions) == 0 {
 		return 1
 	}
-	return s.AxisLengths[0]
+	return s.Dimensions[0]
 }
 
 // IsAtomic returns true for the shape of an atomic value, that is
 // a single value with no axis.
 func (s *Shape) IsAtomic() bool {
-	return len(s.AxisLengths) == 0
+	return len(s.Dimensions) == 0
 }
 
 // Size returns the number of elements of DType are needed for this shape. It's the product of all dimensions.
 func (s *Shape) Size() int {
-	return Size(s.AxisLengths)
+	return Size(s.Dimensions)
 }
 
 // ByteSize returns the size of the buffer, in bytes, to store the data specified by the shape.
@@ -59,11 +59,11 @@ func (s *Shape) Equal(o *Shape) bool {
 	if s.DType != o.DType {
 		return false
 	}
-	if len(s.AxisLengths) != len(o.AxisLengths) {
+	if len(s.Dimensions) != len(o.Dimensions) {
 		return false
 	}
-	for i, li := range s.AxisLengths {
-		if o.AxisLengths[i] != li {
+	for i, li := range s.Dimensions {
+		if o.Dimensions[i] != li {
 			return false
 		}
 	}
@@ -71,8 +71,8 @@ func (s *Shape) Equal(o *Shape) bool {
 }
 
 func (s *Shape) String() string {
-	axes := make([]string, len(s.AxisLengths))
-	for i, axisLength := range s.AxisLengths {
+	axes := make([]string, len(s.Dimensions))
+	for i, axisLength := range s.Dimensions {
 		axes[i] = fmt.Sprintf("[%d]", axisLength)
 	}
 	return strings.Join(axes, "") + s.DType.String()
