@@ -148,8 +148,8 @@ type (
 		// Concat concatenates multiple arrays into a single array.
 		Concat(axis int, nodes []Value) (Value, error)
 
-		// Cast returns a cast/convert operator node.
-		Cast(x Value, target dtypes.DType) (Value, error)
+		// ConvertDType returns a cast/convert operator node.
+		ConvertDType(x Value, dtype dtypes.DType) (Value, error)
 
 		// Bitcast casts a byte array into a given data type.
 		Bitcast(x Value, target dtypes.DType) (Value, error)
