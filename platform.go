@@ -14,7 +14,7 @@
 
 package backend
 
-import "github.com/gx-org/backend/shapes"
+import "github.com/gomlx/compute/shapes"
 
 type (
 	// Platform is a host orchestrating one or more devices.
@@ -23,7 +23,7 @@ type (
 		Name() string
 
 		// Send raw data to the device.
-		Send(dev DeviceNum, buf []byte, sh *shapes.Shape) (DeviceHandle, error)
+		Send(dev DeviceNum, buf []byte, sh shapes.Shape) (DeviceHandle, error)
 
 		// Finalize everything linked to the platform.
 		// It is invalid to use any device from the platform after this call.
