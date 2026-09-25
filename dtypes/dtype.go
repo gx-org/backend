@@ -20,7 +20,8 @@ import (
 	"reflect"
 	"unsafe"
 
-	"github.com/gomlx/gopjrt/dtypes/bfloat16"
+	"github.com/gomlx/compute/dtypes/bfloat16"
+	"github.com/gomlx/compute/dtypes"
 )
 
 // DType is the type of an atomic value or type of the data stored in an array.
@@ -66,6 +67,30 @@ func (dt DType) String() string {
 		return "float64"
 	}
 	return "invalid"
+}
+
+// ToCompute returns the corresponding gomlx compute DType.
+func (dt DType) ToCompute() dtypes.DType {
+	switch dt {
+	case Bool:
+		return dtypes.Bool
+	case Int, Int64:
+		return dtypes.Int64
+	case Int32:
+		return dtypes.Int32
+	case Uint32:
+		return dtypes.Uint32
+	case Uint64:
+		return dtypes.Uint64
+	case BFloat16:
+		return dtypes.BFloat16
+	case Float32:
+		return dtypes.Float32
+	case Float64:
+		return dtypes.Float64
+	default:
+		return dtypes.InvalidDType
+	}
 }
 
 // GoFloat is a constraint supporting floating-point type.
@@ -198,6 +223,9 @@ func (dt DType) Size() int {
 
 // ToSlice converts a []byte buffer into a slice of a given Go type.
 func ToSlice[T any](data []byte) []T {
+	if len(data) == 0 {
+		return nil
+	}
 	var t T
 	size := int(unsafe.Sizeof(t))
 	if len(data)%size != 0 {
