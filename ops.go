@@ -157,8 +157,8 @@ type (
 		// Slice returns a slice on a node.
 		Slice(x Value, index int) (Value, error)
 
-		// Set returns a node to set a slice in an array.
-		Set(x, updates Value, index []Value) (Value, error)
+		// DynamicUpdateSlice updates a slice in an array.
+		DynamicUpdateSlice(operand, update Value, startIndices []Value) (Value, error)
 
 		// Dot product between x and y.
 		Dot(x, y Value) (Value, error)
