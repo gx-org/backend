@@ -128,8 +128,11 @@ type (
 		// ShiftLeft returns a node shifting x left by y.
 		ShiftLeft(x, y Value) (Value, error)
 
-		// ShiftRight returns a node shifting x right by y.
-		ShiftRight(x, y Value) (Value, error)
+		// ShiftRightArithmetic returns a node shifting lhs right by rhs, preserving the sign bit.
+		ShiftRightArithmetic(lhs, rhs Value) (Value, error)
+
+		// ShiftRightLogical returns a node shifting lhs right by rhs, ignoring the sign bit.
+		ShiftRightLogical(lhs, rhs Value) (Value, error)
 
 		// BitwiseAnd returns the bitwise AND of x and y.
 		BitwiseAnd(x, y Value) (Value, error)
