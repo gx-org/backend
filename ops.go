@@ -17,11 +17,15 @@ package backend
 import (
 	"fmt"
 
+	"google3/third_party/golang/github_com/gomlx/compute/v/v0/compute"
 	"github.com/gomlx/compute/dtypes"
 	"github.com/gomlx/compute/shapes"
 )
 
 type (
+	// DotGeneralConfig are optional configurations for the DotGeneral operation.
+	DotGeneralConfig = compute.DotGeneralConfig
+
 	// Value in the graph.
 	Value interface {
 		Graph() Function
@@ -160,11 +164,8 @@ type (
 		// DynamicUpdateSlice updates a slice in an array.
 		DynamicUpdateSlice(operand, update Value, startIndices []Value) (Value, error)
 
-		// Dot product between x and y.
-		Dot(x, y Value) (Value, error)
-
 		// DotGeneral returns a general dot operator node.
-		DotGeneral(x, y Value, batchAxes, reduceAxes [2][]int) (Value, error)
+		DotGeneral(lhs Value, lhsContractingAxes, lhsBatchAxes []int, rhs Value, rhsContractingAxes, rhsBatchAxes []int, config DotGeneralConfig) (Value, error)
 
 		// While returns a while loop node.
 		While(cond, body *Subgraph, state Value) (Value, error)
