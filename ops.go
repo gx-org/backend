@@ -195,7 +195,7 @@ type (
 		Gather(x Value, startIndices Value, indexVectorAxis int, offsetAxes []int, collapsedSliceAxes []int, startIndexMap []int, sliceSizes []int, indicesAreSorted bool) (Value, error)
 
 		// Transpose the array.
-		Transpose(x Value, permutation []int) (Value, error)
+		Transpose(x Value, permutation ...int) (Value, error)
 
 		// Abs returns the absolute value of x.
 		Abs(x Value) (Value, error)
