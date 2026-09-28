@@ -236,9 +236,9 @@ type (
 		// Tanh returns the hyperbolic tangent of x.
 		Tanh(x Value) (Value, error)
 
-		// RngBitGenerator generates random values of the given shape using the provided RNG state.
+		// RNGBitGenerator generates random values of the given shape using the provided RNG state.
 		// It returns the updated RNG state and the generated values.
-		RngBitGenerator(state Value, shape shapes.Shape) (Value, Value, error)
+		RNGBitGenerator(state Value, shape shapes.Shape) (newState Value, values Value, err error)
 	}
 
 	// Subgraph bundles a Graph and its output node together.
