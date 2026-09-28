@@ -162,7 +162,7 @@ type (
 		Bitcast(x Value, target dtypes.DType) (Value, error)
 
 		// Slice returns a slice on a node.
-		Slice(x Value, index int) (Value, error)
+		Slice(x Value, starts, limits, strides []int) (Value, error)
 
 		// DynamicUpdateSlice updates a slice in an array.
 		DynamicUpdateSlice(operand, update Value, startIndices []Value) (Value, error)
@@ -187,9 +187,6 @@ type (
 
 		// ReduceSum sums over axes.
 		ReduceSum(x Value, axes ...int) (Value, error)
-
-		// Split an array along an axis.
-		Split(x Value, axis, numSplits int) (Value, error)
 
 		// Gather data from an array.
 		Gather(x Value, startIndices Value, indexVectorAxis int, offsetAxes []int, collapsedSliceAxes []int, startIndexMap []int, sliceSizes []int, indicesAreSorted bool) (Value, error)
