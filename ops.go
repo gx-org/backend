@@ -152,8 +152,8 @@ type (
 		// Reshape returns a reshape operator node.
 		Reshape(x Value, axisLengths []int) (Value, error)
 
-		// Concat concatenates multiple arrays into a single array.
-		Concat(axis int, nodes []Value) (Value, error)
+		// Concatenate concatenates multiple arrays into a single array.
+		Concatenate(axis int, operands ...Value) (Value, error)
 
 		// ConvertDType returns a cast/convert operator node.
 		ConvertDType(x Value, dtype dtypes.DType) (Value, error)
