@@ -183,10 +183,10 @@ type (
 		ArgMinMax(x Value, axis int, outputDType dtypes.DType, isMin bool) (Value, error)
 
 		// ReduceMax applies max over axes.
-		ReduceMax(x Value, axes []int) (Value, error)
+		ReduceMax(x Value, axes ...int) (Value, error)
 
 		// ReduceSum sums over axes.
-		ReduceSum(x Value, axes []int) (Value, error)
+		ReduceSum(x Value, axes ...int) (Value, error)
 
 		// Split an array along an axis.
 		Split(x Value, axis, numSplits int) (Value, error)
