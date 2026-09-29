@@ -150,7 +150,7 @@ type (
 		LogicalOr(x, y Value) (Value, error)
 
 		// Reshape returns a reshape operator node.
-		Reshape(x Value, axisLengths []int) (Value, error)
+		Reshape(x Value, dimensions ...int) (Value, error)
 
 		// Concatenate concatenates multiple arrays into a single array.
 		Concatenate(axis int, operands ...Value) (Value, error)
